@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "sample_commons.h"
 #include "macros.h"
 #include "d3d12.h"
@@ -7,7 +8,7 @@ void ExitIfFailed(const HRESULT hr)
 {
 	if (FAILED(hr)) {
 		char s_str[64] = "";
-		if (sprintf_s(s_str, 64, "ERROR: HRESULT 0x%08X\n", (UINT)hr) > 0) {
+		if (snprintf(s_str, 64, "ERROR: HRESULT 0x%08X\n", (UINT)hr) > 0) {
 			OutputDebugString(s_str);
 		}
 		exit(EXIT_FAILURE);
