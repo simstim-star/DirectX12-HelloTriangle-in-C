@@ -313,9 +313,10 @@ static void LoadAssets(DXSample* const sample)
 }
 
 // WAITING FOR THE FRAME TO COMPLETE BEFORE CONTINUING IS NOT BEST PRACTICE.
-// This is code implemented as such for simplicity. The D3D12HelloFrameBuffering
-// sample illustrates how to use fences for efficient resource usage and to
-// maximize GPU utilization
+// It's implemented as such for simplicity, but doesn't really make good use of the frame
+// buffers, as we always wait for all work to be done before starting work on the other buffer.
+// In the D3D12HelloFrameBuffering example, we keep a fenceValue for each buffer to keep track if
+// the work for this buffer is already done and it's ready to receive more.
 static void WaitForPreviousFrame(DXSample* const sample)
 {
 	// Signal to the fence the current fenceValue
