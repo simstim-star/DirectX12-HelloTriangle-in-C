@@ -3,7 +3,7 @@ This is an adaptation of the official [D3D12HelloWorld HelloTriangle](https://gi
 
 This was done for educational purposes, in order to learn better about COM and DirectX.
 
-## How to build
+## How to build (MSVC)
 Run the following with CMake:
 
 ```
@@ -16,3 +16,11 @@ This will generate a folder called `build-msvc` with the Visual Studio Solution 
 You can run it to see the iconic "HelloTriangle" below:
 
 ![image](https://github.com/simstim-star/DirectX12-HelloTriangle-in-C/assets/167698401/224b0151-8987-448e-988c-113fceb65602)
+
+## How to build (GCC)
+
+You can also build with GCC:
+
+```
+cc -mwindows *.c -ldxgi -ld3dcompiler -ld3d12 -ldxguid
+```
