@@ -6,6 +6,8 @@
 
 #define FrameCount 2
 
+typedef struct IDXGISwapChain3 IDXGISwapChain3;
+
 typedef struct DXSample
 {
     // Viewport dimensions.
@@ -22,7 +24,7 @@ typedef struct DXSample
     // Pipeline objects.
     D3D12_VIEWPORT viewport;
     D3D12_RECT scissorRect;
-    struct IDXGISwapChain3 *swapChain;
+    IDXGISwapChain3 *swapChain;
     ID3D12Device *device;
     ID3D12Resource *renderTargets[FrameCount];
     ID3D12CommandAllocator *commandAllocator;

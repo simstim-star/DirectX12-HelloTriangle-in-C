@@ -42,7 +42,7 @@ void GetCurrentPath(_Out_writes_(pathSize) WCHAR* const path, UINT pathSize)
 
 void GetHardwareAdapter(
 	IDXGIFactory1* const  pFactory,
-	const IDXGIAdapter1** const ppAdapter,
+	IDXGIAdapter1** ppAdapter,
 	bool requestHighPerformanceAdapter)
 {
 	*ppAdapter = NULL;
