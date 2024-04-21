@@ -17,7 +17,7 @@ void ExitIfFailed(const HRESULT hr)
 
 /******************************************************************************************************************
 	Retrieves the path of the executable file of the current process with a last slash ('\\') appended in the end.
-	Example: C:\\samples\\DirectX_C\\build-msvc\\Debug\\some_game.exe\\
+	Example: C:\\path\\to\\my\\executable.exe\\
 *******************************************************************************************************************/
 void GetCurrentPath(_Out_writes_(pathSize) WCHAR* const path, UINT pathSize)
 {
