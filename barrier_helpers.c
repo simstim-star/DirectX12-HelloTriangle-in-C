@@ -7,12 +7,14 @@ D3D12_RESOURCE_BARRIER CD3DX12_Transition(
 	const UINT subresource,
 	const D3D12_RESOURCE_BARRIER_FLAGS flags)
 {
-	D3D12_RESOURCE_BARRIER result = { 0 };
-	result.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	result.Flags = flags;
-	result.Transition.pResource = pResource;
-	result.Transition.StateBefore = stateBefore;
-	result.Transition.StateAfter = stateAfter;
-	result.Transition.Subresource = subresource;
-	return result;
+	return (D3D12_RESOURCE_BARRIER) {
+		.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION,
+		.Flags = flags,
+		.Transition = {
+			.pResource = pResource,
+			.StateBefore = stateBefore,
+			.StateAfter = stateAfter,
+			.Subresource = subresource,
+		}
+	};
 }
