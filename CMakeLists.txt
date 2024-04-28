@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.23.2)
 project(HelloTriangle LANGUAGES C)
 
-set(CMAKE_C_STANDARD 23)
+set(CMAKE_C_STANDARD 17)
 set(SOURCE_FILES main.c sample.c sample_commons.c window.c)
 set(HEADER_FILES sample.h sample_commons.h barrier_helpers.h window.h core_helpers.h macros.h)
 set(SHADER_FILES shaders/shaders.hlsl)
@@ -22,8 +22,8 @@ source_group("Shaders" FILES ${SHADER_FILES})
 add_executable(${PROJECT_NAME} WIN32 ${ALL_PROJECT_FILES})
 
 add_custom_command(
-    TARGET HelloTriangle POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/shaders $<TARGET_FILE_DIR:HelloTriangle>/shaders
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/shaders $<TARGET_FILE_DIR:${PROJECT_NAME}>/shaders
     COMMENT "Copying shaders" VERBATIM
 )
 
