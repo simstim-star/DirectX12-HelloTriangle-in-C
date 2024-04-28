@@ -1,6 +1,8 @@
 ## DirectX12 Hello Triangle in C
 This is an adaptation of the official [D3D12HelloWorld HelloTriangle](https://github.com/microsoft/DirectX-Graphics-Samples/tree/master/Samples/Desktop/D3D12HelloWorld/src/HelloTriangle) using C.
 
+Also check my [DirectX-Graphics-Samples-in-C](https://github.com/simstim-star/DirectX-Graphics-Samples-in-C), where I intend to port all oficial examples to C.
+
 This was done for educational purposes, in order to learn better about COM and DirectX.
 
 ## How to build (MSVC)
