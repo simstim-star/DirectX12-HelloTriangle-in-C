@@ -8,7 +8,6 @@
 #include "barrier_helpers.h"
 #include "core_helpers.h"
 
-
 /*************************************************************************************
  Forward declarations of private functions
 **************************************************************************************/
@@ -146,12 +145,12 @@ static void LoadPipeline(DXSample* const sample)
 		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle;
 		CALL(GetCPUDescriptorHandleForHeapStart, sample->rtvHeap, &rtvHandle);
 		// Create a RTV for each frame.
-		for (UINT n = 0; n < FrameCount; n++)
+		for (UINT nthSwapChainBuffer = 0; nthSwapChainBuffer < FrameCount; nthSwapChainBuffer++)
 		{
-			// the resource that will be used as RTV is the swap chain buffers
-			ExitIfFailed(CALL(GetBuffer, sample->swapChain, n, IID_PPV_ARGS(&sample->renderTargets[n])));
+			// set resource at renderTargets[nthSwapChainBuffer] as the nth-SwapChainBuffer
+			ExitIfFailed(CALL(GetBuffer, sample->swapChain, nthSwapChainBuffer, IID_PPV_ARGS(&sample->renderTargets[nthSwapChainBuffer])));
 			// create a RTV on the heap related to the handle
-			CALL(CreateRenderTargetView, sample->device, sample->renderTargets[n], NULL, rtvHandle);
+			CALL(CreateRenderTargetView, sample->device, sample->renderTargets[nthSwapChainBuffer], NULL, rtvHandle);
 			// walk an offset equivalent to one descriptor to go to next space to store the next RTV
 			rtvHandle.ptr = (SIZE_T)((INT64)(rtvHandle.ptr) + (INT64)(sample->rtvDescriptorSize));
 		}

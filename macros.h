@@ -26,7 +26,7 @@
 
 // The ## __VA_ARGS__ is not portable, being a GCC extension https://gcc.gnu.org/onlinedocs/gcc/Variadic-Macros.html
 // But apparently, it also works in MSVC as well
-#define CALL(METHOD, CALLER, ...) CALLER->lpVtbl->METHOD(CALLER, ## __VA_ARGS__)
+#define CALL(method, caller, ...) caller->lpVtbl->method(caller, ## __VA_ARGS__)
 
 // cast COM style
 #define CAST(from, to) CALL(QueryInterface, from, IID_PPV_ARGS(&to))

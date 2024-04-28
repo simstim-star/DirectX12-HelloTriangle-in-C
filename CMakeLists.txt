@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.23.2)
 project(HelloTriangle LANGUAGES C)
 
 set(CMAKE_C_STANDARD 23)
-set(SOURCE_FILES main.c sample.c sample_commons.c window.c barrier_helpers.c core_helpers.c)
+set(SOURCE_FILES main.c sample.c sample_commons.c window.c)
 set(HEADER_FILES sample.h sample_commons.h barrier_helpers.h window.h core_helpers.h macros.h)
 set(SHADER_FILES shaders/shaders.hlsl)
 set(ALL_PROJECT_FILES ${SOURCE_FILES} ${HEADER_FILES} ${SHADER_FILES})
