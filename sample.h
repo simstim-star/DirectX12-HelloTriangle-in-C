@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Windows.h"
-#include <stdbool.h>
+#include "windows.h"
 #include <d3d12.h>
 
 #define FrameCount 2
@@ -15,7 +14,7 @@ typedef struct DXSample
     UINT height;
     float aspectRatio;
     // Adapter info.
-    bool useWarpDevice;
+    BOOL useWarpDevice;
     // Root assets path.
     WCHAR assetsPath[512];
     // Window title.

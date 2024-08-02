@@ -84,7 +84,7 @@ static void LoadPipeline(DXSample* const sample)
 	IDXGIAdapter1* hardwareAdapter = NULL;
 	IDXGIFactory1* factoryAsFactory1 = NULL;
 	ExitIfFailed(CAST(factory, factoryAsFactory1));
-	GetHardwareAdapter(factoryAsFactory1, &hardwareAdapter, false);
+	GetHardwareAdapter(factoryAsFactory1, &hardwareAdapter, FALSE);
 	RELEASE(factoryAsFactory1);
 
 	IUnknown* hardwareAdapterAsUnknown = NULL;
@@ -110,8 +110,6 @@ static void LoadPipeline(DXSample* const sample)
 		.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD,
 		.SampleDesc.Count = 1,
 	};
-
-	ID3D12Debug teste;
 
 	IUnknown* commandQueueAsIUnknown = NULL;
 	ExitIfFailed(CAST(sample->commandQueue, commandQueueAsIUnknown));
