@@ -95,22 +95,23 @@ static void LoadPipeline(DXSample* const sample)
 
 	/* Create command queue */
 
-	D3D12_COMMAND_QUEUE_DESC queueDesc = { 0 };
-	queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
-	queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
+	D3D12_COMMAND_QUEUE_DESC queueDesc = { .Flags = D3D12_COMMAND_QUEUE_FLAG_NONE, .Type = D3D12_COMMAND_LIST_TYPE_DIRECT };
 	ID3D12CommandQueue* commandQueue = NULL;
 	ExitIfFailed(CALL(CreateCommandQueue, sample->device, &queueDesc, IID_PPV_ARGS(&sample->commandQueue)));
 
 	/* Create swap chain */
 
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = { 0 };
-	swapChainDesc.BufferCount = 2;
-	swapChainDesc.Width = 1280;
-	swapChainDesc.Height = 720;
-	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-	swapChainDesc.SampleDesc.Count = 1;
+	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {
+		.BufferCount = 2,
+		.Width = 1280,
+		.Height = 720,
+		.Format = DXGI_FORMAT_R8G8B8A8_UNORM,
+		.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT,
+		.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD,
+		.SampleDesc.Count = 1,
+	};
+
+	ID3D12Debug teste;
 
 	IUnknown* commandQueueAsIUnknown = NULL;
 	ExitIfFailed(CAST(sample->commandQueue, commandQueueAsIUnknown));
@@ -132,10 +133,11 @@ static void LoadPipeline(DXSample* const sample)
 
 	/* Create descriptor heaps (only 2 RTVs in this example) */
 	{
-		D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = { 0 };
-		rtvHeapDesc.NumDescriptors = FrameCount;
-		rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-		rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+		D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = {
+			.NumDescriptors = FrameCount,
+			.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV,
+			.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE,
+		};
 		ExitIfFailed(CALL(CreateDescriptorHeap, sample->device, &rtvHeapDesc, IID_PPV_ARGS(&sample->rtvHeap)));
 		sample->rtvDescriptorSize = CALL(GetDescriptorHandleIncrementSize, sample->device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	}
@@ -201,38 +203,39 @@ static void LoadAssets(DXSample* const sample)
 		const D3D12_INPUT_ELEMENT_DESC inputElementDescs[] =
 		{
 			{.SemanticName = "POSITION", .SemanticIndex = 0, .Format = DXGI_FORMAT_R32G32B32_FLOAT, .InputSlot = 0,
-			  .AlignedByteOffset = 0, .InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, .InstanceDataStepRate = 0
+			 .AlignedByteOffset = 0, .InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, .InstanceDataStepRate = 0
 			},
 			{.SemanticName = "COLOR", .SemanticIndex = 0, .Format = DXGI_FORMAT_R32G32B32A32_FLOAT, .InputSlot = 0,
-			  .AlignedByteOffset = 12, .InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, .InstanceDataStepRate = 0
+			 .AlignedByteOffset = 12, .InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, .InstanceDataStepRate = 0
 			}
 		};
 
 		/* Create PSO */
 
-		D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = { 0 };
-		psoDesc.pRootSignature = sample->rootSignature;
-		psoDesc.InputLayout = (D3D12_INPUT_LAYOUT_DESC){
-			.pInputElementDescs = inputElementDescs,
-			.NumElements = _countof(inputElementDescs)
+		D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {
+			.pRootSignature = sample->rootSignature,
+			.InputLayout = (D3D12_INPUT_LAYOUT_DESC){
+				.pInputElementDescs = inputElementDescs,
+				.NumElements = _countof(inputElementDescs)
+			},
+			.VS = (D3D12_SHADER_BYTECODE){
+				.pShaderBytecode = CALL(GetBufferPointer, vertexShader),
+				.BytecodeLength = CALL(GetBufferSize, vertexShader),
+			},
+			.PS = (D3D12_SHADER_BYTECODE){
+				.pShaderBytecode = CALL(GetBufferPointer, pixelShader),
+				.BytecodeLength = CALL(GetBufferSize, pixelShader),
+			},
+			.RasterizerState = CD3DX12_DEFAULT_RASTERIZER_DESC(),
+			.BlendState = CD3DX12_DEFAULT_BLEND_DESC(),
+			.DepthStencilState.DepthEnable = FALSE,
+			.DepthStencilState.StencilEnable = FALSE,
+			.SampleMask = UINT_MAX,
+			.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE,
+			.NumRenderTargets = 1,
+			.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM,
+			.SampleDesc.Count = 1,
 		};
-		psoDesc.VS = (D3D12_SHADER_BYTECODE){
-			.pShaderBytecode = CALL(GetBufferPointer, vertexShader),
-			.BytecodeLength = CALL(GetBufferSize, vertexShader),
-		};
-		psoDesc.PS = (D3D12_SHADER_BYTECODE){
-			.pShaderBytecode = CALL(GetBufferPointer, pixelShader),
-			.BytecodeLength = CALL(GetBufferSize, pixelShader),
-		};
-		psoDesc.RasterizerState = CD3DX12_DEFAULT_RASTERIZER_DESC();
-		psoDesc.BlendState = CD3DX12_DEFAULT_BLEND_DESC();
-		psoDesc.DepthStencilState.DepthEnable = FALSE;
-		psoDesc.DepthStencilState.StencilEnable = FALSE;
-		psoDesc.SampleMask = UINT_MAX;
-		psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-		psoDesc.NumRenderTargets = 1;
-		psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
-		psoDesc.SampleDesc.Count = 1;
 		ExitIfFailed(CALL(CreateGraphicsPipelineState, sample->device, &psoDesc, IID_PPV_ARGS(&sample->pipelineState)));
 	}
 
