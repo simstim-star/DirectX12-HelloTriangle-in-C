@@ -1,7 +1,7 @@
 #pragma once
 
 // A problem is that many of these IID are in different headers, but to use this macro, all of them should be included
-#define __extractIID(X) _Generic((X), \
+#define IID(X) _Generic((X), \
               ID3D12Device **: &IID_ID3D12Device, \
               ID3D12Debug **: &IID_ID3D12Debug, \
               IDXGIAdapter1 **: &IID_IDXGIAdapter1, \
@@ -22,14 +22,9 @@
               IUnknown **: &IID_IUnknown, \
               ID3D12Fence **: &IID_ID3D12Fence)
 
-#define IID_PPV_ARGS(ppType) __extractIID(ppType), (void**)(ppType)
+#define IID_PPV_ARGS(pp) IID(pp), pp
 
-// The ## __VA_ARGS__ is not portable, being a GCC extension https://gcc.gnu.org/onlinedocs/gcc/Variadic-Macros.html
-// But apparently, it also works in MSVC as well
-#define CALL(method, caller, ...) caller->lpVtbl->method(caller, ## __VA_ARGS__)
-
-// cast COM style
-#define CAST(from, to) CALL(QueryInterface, from, IID_PPV_ARGS(&to))
+#define CAST(from, to) ID3D12Object_QueryInterface(from, IID(&to), &to)
 
 // Calls Release and makes the pointer NULL if RefCount reaches zero
-#define RELEASE(ptr) if(ptr && ptr->lpVtbl->Release(ptr) == 0) ptr = NULL
+#define RELEASE(ptr) if(ptr && ID3D12Object_Release(ptr) == 0) ptr = NULL

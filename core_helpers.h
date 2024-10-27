@@ -9,15 +9,15 @@ static inline D3D12_RESOURCE_DESC CD3DX12_RESOURCE_DESC_BUFFER(
 {
 	return (D3D12_RESOURCE_DESC) {
 		.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER,
-			.Alignment = alignment,
-			.Width = width,
-			.Height = 1,
-			.DepthOrArraySize = 1,
-			.MipLevels = 1,
-			.Format = DXGI_FORMAT_UNKNOWN,
-			.SampleDesc = { .Count = 1, .Quality = 0 },
-			.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR,
-			.Flags = flags
+		.Alignment = alignment,
+		.Width = width,
+		.Height = 1,
+		.DepthOrArraySize = 1,
+		.MipLevels = 1,
+		.Format = DXGI_FORMAT_UNKNOWN,
+		.SampleDesc = { .Count = 1, .Quality = 0 },
+		.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR,
+		.Flags = flags
 	};
 }
 
@@ -25,16 +25,16 @@ static inline D3D12_RASTERIZER_DESC CD3DX12_DEFAULT_RASTERIZER_DESC(void)
 {
 	return (D3D12_RASTERIZER_DESC) {
 		.FillMode = D3D12_FILL_MODE_SOLID,
-			.CullMode = D3D12_CULL_MODE_BACK,
-			.FrontCounterClockwise = FALSE,
-			.DepthBias = D3D12_DEFAULT_DEPTH_BIAS,
-			.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP,
-			.SlopeScaledDepthBias = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS,
-			.DepthClipEnable = TRUE,
-			.MultisampleEnable = FALSE,
-			.AntialiasedLineEnable = FALSE,
-			.ForcedSampleCount = 0,
-			.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF,
+		.CullMode = D3D12_CULL_MODE_BACK,
+		.FrontCounterClockwise = FALSE,
+		.DepthBias = D3D12_DEFAULT_DEPTH_BIAS,
+		.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP,
+		.SlopeScaledDepthBias = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS,
+		.DepthClipEnable = TRUE,
+		.MultisampleEnable = FALSE,
+		.AntialiasedLineEnable = FALSE,
+		.ForcedSampleCount = 0,
+		.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF,
 	};
 }
 
