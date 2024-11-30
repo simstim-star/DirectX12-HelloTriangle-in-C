@@ -76,7 +76,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
     case WM_PAINT:
         if (pSample)
         {
-            Sample_Update(pSample);
             Sample_Render(pSample);
         }
         return 0;

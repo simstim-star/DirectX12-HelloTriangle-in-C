@@ -49,5 +49,4 @@ typedef struct DXSample
 
 void Sample_Init(DXSample* const sample);
 void Sample_Destroy(DXSample* const sample);
-void Sample_Update(DXSample* const sample);
 void Sample_Render(DXSample* const sample);
