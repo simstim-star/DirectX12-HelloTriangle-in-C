@@ -5,15 +5,13 @@
 #include "d3d12.h"
 #include <dxgi1_6.h>
 
-void ExitIfFailed(const HRESULT hr)
+void LogErrAndExit(const HRESULT hr)
 {
-	if (FAILED(hr)) {
-		char s_str[64] = "";
-		if (snprintf(s_str, 64, "ERROR: HRESULT 0x%08X\n", (UINT)hr) > 0) {
-			OutputDebugString(s_str);
-		}
-		exit(EXIT_FAILURE);
+	char s_str[64] = "";
+	if (snprintf(s_str, 64, "ERROR: HRESULT 0x%08X\n", (UINT)hr) > 0) {
+		OutputDebugString(s_str);
 	}
+	exit(EXIT_FAILURE);
 }
 
 /******************************************************************************************************************
@@ -68,8 +66,11 @@ void GetHardwareAdapter(
 
 			// Check to see whether the adapter supports Direct3D 12, but don't create the actual device yet
 			IUnknown* adapterAsIUnknown = NULL;
-			ExitIfFailed(CAST(adapter, adapterAsIUnknown));
-			if (SUCCEEDED(D3D12CreateDevice(adapterAsIUnknown, D3D_FEATURE_LEVEL_11_0, &IID_ID3D12Device, NULL)))
+			HRESULT hr = CAST(adapter, adapterAsIUnknown);
+			if (FAILED(hr))	LogErrAndExit(hr);
+
+			hr = D3D12CreateDevice(adapterAsIUnknown, D3D_FEATURE_LEVEL_11_0, &IID_ID3D12Device, NULL);
+			if (SUCCEEDED(hr))
 			{
 				RELEASE(adapterAsIUnknown);
 				break;
@@ -94,8 +95,11 @@ void GetHardwareAdapter(
 
 			// Check to see whether the adapter supports Direct3D 12, but don't create the actual device yet
 			IUnknown* adapterAsIUnknown = NULL;
-			ExitIfFailed(CAST(adapter, adapterAsIUnknown));
-			if (SUCCEEDED(D3D12CreateDevice(adapterAsIUnknown, D3D_FEATURE_LEVEL_11_0, &IID_ID3D12Device, NULL)))
+			HRESULT hr = CAST(adapter, adapterAsIUnknown);
+			if (FAILED(hr))	LogErrAndExit(hr);
+
+			hr = D3D12CreateDevice(adapterAsIUnknown, D3D_FEATURE_LEVEL_11_0, &IID_ID3D12Device, NULL);
+			if (SUCCEEDED(hr))
 			{
 				RELEASE(adapterAsIUnknown);
 				break;

@@ -9,6 +9,6 @@ typedef struct Vertex { float3 position; float4 color; } Vertex;
 typedef struct IDXGIFactory1 IDXGIFactory1;
 typedef struct IDXGIAdapter1 IDXGIAdapter1;
 
-void ExitIfFailed(const HRESULT hr);
+void LogErrAndExit(const HRESULT hr);
 void GetCurrentPath(_Out_writes_(pathSize) WCHAR* const path, UINT pathSize);
 void GetHardwareAdapter(IDXGIFactory1* const pFactory, IDXGIAdapter1** ppAdapter, BOOL requestHighPerformanceAdapter);
